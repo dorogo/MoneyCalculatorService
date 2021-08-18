@@ -9,7 +9,8 @@ public class Member {
 
     @NotBlank
     private final String name;
-    @Positive
+    //TODO переделать на целочисленный, пока устраивает double c 0.0000001.
+    @Min(0L)
     private double spent;
     private double change;
 

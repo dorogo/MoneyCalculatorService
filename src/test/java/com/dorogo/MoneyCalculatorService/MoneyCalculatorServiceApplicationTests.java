@@ -54,6 +54,11 @@ class MoneyCalculatorServiceApplicationTests {
 		mvc.perform(MockMvcRequestBuilders.post("/process").content(requestParam).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isBadRequest())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+		//has negative spent field
+		requestParam = "[{\"name\":\"test0\",\"spent\":\"-5\"},{\"name\":\"test1\",\"spent\":\"100\"},{\"name\":\"test2\",\"spent\":\"500\"}]";
+		mvc.perform(MockMvcRequestBuilders.post("/process").content(requestParam).contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 
 	}
 
