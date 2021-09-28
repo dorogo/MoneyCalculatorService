@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -30,6 +31,22 @@ public class AppController {
         listForm.setList(validList);
         model.addAttribute("listForm", listForm);
         return "calculator";
+    }
+
+    @PostMapping(value = "/calculator", params = "row")
+    public ModelAndView addRow(ListForm listForm, BindingResult bindingResult, @RequestParam(value = "row", required = true) String manageRow) {
+        ModelAndView model = new ModelAndView("calculator");
+        ArrayList<MemberForm> list = listForm.getList();
+        if (manageRow.equals("add"))
+            list.add(new MemberForm());
+        else if (manageRow.equals("remove"))
+        {
+            int i = list.size() - 1;
+            if (i > 1)
+                list.remove(i);
+        }
+        model.addObject("listForm", listForm);
+        return model;
     }
 
     @PostMapping("/calculator")

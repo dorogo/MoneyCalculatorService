@@ -19,10 +19,15 @@
             <p style="color:red;" th:if="${#fields.hasErrors('list[__${stat.index}__].spent')}"
                th:errors="*{list[__${stat.index}__].spent}"/>
         </div>
+        <br/>
     </div>
 
     <input type="submit" value="Submit"/>
+    <button type="submit" th:name="row" th:value="add">Add Row</button>
+    <button type="submit" th:name="row" th:value="remove">Remove Row</button>
 </form>
+
+
 
 </body>
 </html>
