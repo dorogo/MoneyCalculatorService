@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1"/>
+    <title>calculator</title>
+</head>
+<body>
+
+<form action="#" th:action="@{/calculator}" th:object="${listForm}" method="post">
+    <div class="row item" th:each="row, stat : ${listForm.list}">
+
+        <div class="col-lg-6 form-group">
+            Name:<input th:field="*{list[__${stat.index}__].name}" type="text" class="form-control"/>
+            <p style="color:red;" th:if="${#fields.hasErrors('list[__${stat.index}__].name')}"
+               th:errors="*{list[__${stat.index}__].name}"/>
+        </div>
+        <div class="col-lg-6 form-group">
+            Spent:<input th:field="*{list[__${stat.index}__].spent}" type="text" class="form-control"/>
+            <p style="color:red;" th:if="${#fields.hasErrors('list[__${stat.index}__].spent')}"
+               th:errors="*{list[__${stat.index}__].spent}"/>
+        </div>
+    </div>
+
+    <input type="submit" value="Submit"/>
+</form>
+
+</body>
+</html>

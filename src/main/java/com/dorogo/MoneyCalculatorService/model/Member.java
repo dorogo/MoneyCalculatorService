@@ -1,16 +1,18 @@
 package com.dorogo.MoneyCalculatorService.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.*;
 
 @Data
+@NoArgsConstructor
+@Accessors(chain = true)
 public class Member {
 
-    @NotBlank
-    private final String name;
+    private String name;
     //TODO переделать на целочисленный, пока устраивает double c 0.0000001.
-    @Min(0L)
     private double spent;
     private double change;
 
@@ -19,16 +21,19 @@ public class Member {
         this.spent = spent;
     }
 
-    public void sentTo(Member mTarget) {
+    public String sentTo(Member mTarget) {
         double cTarget = mTarget.getChange();
-        if (cTarget <= 0) return;
+        if (cTarget <= 0) return "";
         double res = this.change + cTarget;
         double delta = (res <= 0) ? cTarget : Math.abs(this.change);
         mTarget.addMoney(-delta);
         this.addMoney(delta);
 
-        System.out.println("Member.sentTo(). "+ this.getName() +" gave to " + mTarget.getName()
-                +" "+ delta);
+        String resStr =  "'"+ this.getName() +"' должен выдать '" + mTarget.getName()
+                +"' "+ delta + ".";
+
+        System.out.println(resStr);
+        return resStr;
     }
 
     public void addMoney(double v) {
