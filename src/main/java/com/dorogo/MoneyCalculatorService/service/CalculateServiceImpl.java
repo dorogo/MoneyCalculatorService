@@ -3,6 +3,8 @@ package com.dorogo.MoneyCalculatorService.service;
 import com.dorogo.MoneyCalculatorService.model.Member;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,11 +16,16 @@ public class CalculateServiceImpl implements CalculateService{
     public String process(List<Member> list) {
         StringBuilder resultSb = new StringBuilder();
         //calculate all amount
-        double amount = list.stream().mapToDouble(Member::getSpent).sum();
-        double countPerOne = amount / list.size();
+        BigDecimal amount = list
+                .stream()
+                .map(Member::getSpent)
+                .reduce(BigDecimal::add)
+                .get();
+
+        BigDecimal countPerOne = amount.divide(BigDecimal.valueOf(list.size()), 2, RoundingMode.HALF_DOWN);
         System.out.println("Main.process(). amount = " + amount+ " : per one = " +countPerOne);
 
-        list.forEach(member -> member.setChange(member.getSpent() - countPerOne));
+        list.forEach(member -> member.setChange(member.getSpent().subtract(countPerOne)));
         printCurrentState(list);
 
         //TODO sort list by change and spent
@@ -31,8 +38,8 @@ public class CalculateServiceImpl implements CalculateService{
         //end temp
 
         for (Member m : list) {
-            if (m.getChange() >= 0) continue;
-            while (m.getChange() < 0) {
+            if (m.getChange().compareTo(BigDecimal.ZERO) >= 0) continue;
+            while (m.getChange().compareTo(BigDecimal.ZERO) < 0) {
                 String s = m.sentTo(listTarget.get(0));
                 resultSb.append(s).append('\n');
                 printCurrentState(list);
@@ -45,7 +52,7 @@ public class CalculateServiceImpl implements CalculateService{
         return resultStr;
     }
     private List<Member> refreshListTarget(List<Member> list) {
-        List<Member> res = list.stream().filter(m -> m.getChange() > 0).collect(Collectors.toList());
+        List<Member> res = list.stream().filter(m -> m.getChange().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
         System.out.println("Main.refreshListTarget(). " + res);
         return res;
 //        return list.stream().filter(m -> m.getChange() > 0).collect(Collectors.toList());

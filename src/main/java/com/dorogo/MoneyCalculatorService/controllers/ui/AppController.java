@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 @Controller
@@ -62,9 +63,10 @@ public class AppController {
 
         ArrayList<Member> list = new ArrayList<>();
         for (MemberForm mf : listForm.getList()) {
+            BigDecimal spent = new BigDecimal(mf.getSpent());
             Member m = new Member()
                     .setName(mf.getName())
-                    .setSpent(mf.getSpent());
+                    .setSpent(spent);
             list.add(m);
         }
 

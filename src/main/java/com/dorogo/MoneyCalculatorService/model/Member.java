@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.*;
+import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
@@ -12,21 +12,21 @@ import javax.validation.constraints.*;
 public class Member {
 
     private String name;
-    //TODO переделать на целочисленный, пока устраивает double c 0.0000001.
-    private double spent;
-    private double change;
+    private BigDecimal spent;
+    private BigDecimal change;
 
-    public Member(String name, double spent) {
+    public Member(String name, BigDecimal spent) {
         this.name = name;
         this.spent = spent;
     }
 
     public String sentTo(Member mTarget) {
-        double cTarget = mTarget.getChange();
-        if (cTarget <= 0) return "";
-        double res = this.change + cTarget;
-        double delta = (res <= 0) ? cTarget : Math.abs(this.change);
-        mTarget.addMoney(-delta);
+        BigDecimal cTarget = mTarget.getChange();
+        if (cTarget.compareTo(BigDecimal.ZERO) <= 0)
+            return "";
+        BigDecimal res = this.change.add(cTarget);
+        BigDecimal delta = (res.compareTo(BigDecimal.ZERO) <= 0) ? cTarget : this.change.abs();
+        mTarget.addMoney(delta.negate());
         this.addMoney(delta);
 
         String resStr =  "'"+ this.getName() +"' должен выдать '" + mTarget.getName()
@@ -36,8 +36,8 @@ public class Member {
         return resStr;
     }
 
-    public void addMoney(double v) {
-        this.change += v;
-        this.spent += v;
+    public void addMoney(BigDecimal v) {
+        this.change = this.change.add(v);
+        this.spent = this.spent.add(v);
     }
 }
