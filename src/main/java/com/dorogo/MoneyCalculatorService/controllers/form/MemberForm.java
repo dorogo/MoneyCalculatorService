@@ -11,6 +11,6 @@ public class MemberForm {
     private String name;
 
     @Min(0L)
-    private double spent;
+    private int spent;
 
 }

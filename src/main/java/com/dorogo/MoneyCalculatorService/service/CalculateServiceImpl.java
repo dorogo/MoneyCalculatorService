@@ -1,6 +1,7 @@
 package com.dorogo.MoneyCalculatorService.service;
 
 import com.dorogo.MoneyCalculatorService.model.Member;
+import com.dorogo.MoneyCalculatorService.util.MyBigDecimal;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -16,13 +17,13 @@ public class CalculateServiceImpl implements CalculateService{
     public String process(List<Member> list) {
         StringBuilder resultSb = new StringBuilder();
         //calculate all amount
-        BigDecimal amount = list
+        MyBigDecimal amount = list
                 .stream()
                 .map(Member::getSpent)
-                .reduce(BigDecimal::add)
+                .reduce(MyBigDecimal::add)
                 .get();
 
-        BigDecimal countPerOne = amount.divide(BigDecimal.valueOf(list.size()), 2, RoundingMode.HALF_DOWN);
+        MyBigDecimal countPerOne = amount.divide(BigDecimal.valueOf(list.size()));
         System.out.println("Main.process(). amount = " + amount+ " : per one = " +countPerOne);
 
         list.forEach(member -> member.setChange(member.getSpent().subtract(countPerOne)));
@@ -38,8 +39,9 @@ public class CalculateServiceImpl implements CalculateService{
         //end temp
 
         for (Member m : list) {
+            m.getChange().setScale(2, RoundingMode.HALF_DOWN);
             if (m.getChange().compareTo(BigDecimal.ZERO) >= 0) continue;
-            while (m.getChange().compareTo(BigDecimal.ZERO) < 0) {
+            while (m.getChange().compareTo(BigDecimal.ZERO) < 0 && listTarget.size() > 0) {
                 String s = m.sentTo(listTarget.get(0));
                 resultSb.append(s).append('\n');
                 printCurrentState(list);

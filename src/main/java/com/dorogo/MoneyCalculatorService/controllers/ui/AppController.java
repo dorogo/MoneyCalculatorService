@@ -4,6 +4,7 @@ import com.dorogo.MoneyCalculatorService.controllers.form.ListForm;
 import com.dorogo.MoneyCalculatorService.controllers.form.MemberForm;
 import com.dorogo.MoneyCalculatorService.model.Member;
 import com.dorogo.MoneyCalculatorService.service.CalculateService;
+import com.dorogo.MoneyCalculatorService.util.MyBigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,7 +64,7 @@ public class AppController {
 
         ArrayList<Member> list = new ArrayList<>();
         for (MemberForm mf : listForm.getList()) {
-            BigDecimal spent = new BigDecimal(mf.getSpent());
+            MyBigDecimal spent = new MyBigDecimal(mf.getSpent());
             Member m = new Member()
                     .setName(mf.getName())
                     .setSpent(spent);
