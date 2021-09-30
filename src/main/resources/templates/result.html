@@ -6,7 +6,24 @@
 </head>
 <body>
 
-    <label th:utext="'Ку!<br/>' + ${resultMessage}"></label>
+    <label>Ку!</label>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th> Name </th>
+            <th> Spent </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="m : ${listForm.list}">
+            <td><span th:text="${m.name}"> Title </span></td>
+            <td><span th:text="${m.spent}"> Author </span></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <label th:text="${resultMessage}"></label>
 
 </body>
 </html>

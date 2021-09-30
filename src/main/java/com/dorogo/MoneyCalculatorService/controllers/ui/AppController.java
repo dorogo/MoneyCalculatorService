@@ -73,6 +73,7 @@ public class AppController {
 
         model = new ModelAndView("result");
         String result = calculateService.process(list);
+        model.addObject("listForm", listForm);
         model.addObject("resultMessage", result);
         return model;
     }
