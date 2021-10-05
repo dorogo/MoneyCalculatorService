@@ -4,10 +4,12 @@ import com.dorogo.MoneyCalculatorService.util.MyBigDecimal;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import lombok.extern.slf4j.Slf4j;
 
 @Data
 @NoArgsConstructor
 @Accessors(chain = true)
+@Slf4j
 public class Member {
 
     private String name;
@@ -31,7 +33,7 @@ public class Member {
         String resStr =  "'"+ this.getName() +"' должен выдать '" + mTarget.getName()
                 +"' "+ delta + ".";
 
-        System.out.println(resStr);
+        log.info("resStr = " + resStr);
         return resStr;
     }
 

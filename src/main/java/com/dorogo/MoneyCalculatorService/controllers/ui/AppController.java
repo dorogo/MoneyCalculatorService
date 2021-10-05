@@ -5,6 +5,7 @@ import com.dorogo.MoneyCalculatorService.controllers.form.MemberForm;
 import com.dorogo.MoneyCalculatorService.model.Member;
 import com.dorogo.MoneyCalculatorService.service.CalculateService;
 import com.dorogo.MoneyCalculatorService.util.MyBigDecimal;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 @Controller
+@Slf4j
 public class AppController {
 
     @Autowired
@@ -53,7 +54,7 @@ public class AppController {
 
     @PostMapping("/calculator")
     public ModelAndView process(@Valid ListForm listForm, BindingResult bindingResult) {
-        System.out.println("AppController.process(). listForm = " + listForm);
+        log.info("listForm = " + listForm);
         ModelAndView model = null;
         if (bindingResult.hasErrors())
         {

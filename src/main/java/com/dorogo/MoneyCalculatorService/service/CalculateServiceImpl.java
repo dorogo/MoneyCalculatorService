@@ -2,6 +2,7 @@ package com.dorogo.MoneyCalculatorService.service;
 
 import com.dorogo.MoneyCalculatorService.model.Member;
 import com.dorogo.MoneyCalculatorService.util.MyBigDecimal;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class CalculateServiceImpl implements CalculateService{
 
     public String process(List<Member> list) {
@@ -24,7 +26,8 @@ public class CalculateServiceImpl implements CalculateService{
                 .get();
 
         MyBigDecimal countPerOne = amount.divide(BigDecimal.valueOf(list.size()));
-        System.out.println("Main.process(). amount = " + amount+ " : per one = " +countPerOne);
+        log.info("amount = " + amount+ " : per one = " +countPerOne);
+
 
         list.forEach(member -> member.setChange(member.getSpent().subtract(countPerOne)));
         printCurrentState(list);
@@ -55,16 +58,16 @@ public class CalculateServiceImpl implements CalculateService{
     }
     private List<Member> refreshListTarget(List<Member> list) {
         List<Member> res = list.stream().filter(m -> m.getChange().compareTo(BigDecimal.ZERO) > 0).collect(Collectors.toList());
-        System.out.println("Main.refreshListTarget(). " + res);
+        log.info("res=" + res);
         return res;
 //        return list.stream().filter(m -> m.getChange() > 0).collect(Collectors.toList());
     }
 
     private void printCurrentState(List<Member> list) {
         list.forEach(member -> {
-            System.out.println("Main.process(). "+member.getName()+"=" +member.getSpent()+":" + member.getChange());
+            log.info(member.getName()+"=" +member.getSpent()+":" + member.getChange());
         });
-        System.out.println("Main.printCurrentState().________________");
+        log.info("________________");
     }
 
 
