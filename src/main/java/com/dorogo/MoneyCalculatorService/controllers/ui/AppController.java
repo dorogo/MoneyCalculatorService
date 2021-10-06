@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -73,9 +75,10 @@ public class AppController {
         }
 
         model = new ModelAndView("result");
-        String result = calculateService.process(list);
+        Map<Member, Map<Member, BigDecimal>> resultMap = calculateService.process(list);
+        String resultStr = calculateService.parseResultHuman(resultMap);
         model.addObject("listForm", listForm);
-        model.addObject("resultMessage", result);
+        model.addObject("resultMessage", resultStr);
         return model;
     }
 

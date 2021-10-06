@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @Accessors(chain = true)
@@ -21,20 +23,15 @@ public class Member {
         this.spent = spent;
     }
 
-    public String sentTo(Member mTarget) {
+    public BigDecimal sentTo(Member mTarget) {
         MyBigDecimal cTarget = mTarget.getChange();
         if (cTarget.compareTo(MyBigDecimal.ZERO) <= 0)
-            return "";
+            return BigDecimal.ZERO;
         MyBigDecimal res = this.change.add(cTarget);
         MyBigDecimal delta = (res.compareTo(MyBigDecimal.ZERO) <= 0) ? cTarget : this.change.abs();
         mTarget.addMoney(delta.negate());
         this.addMoney(delta);
-
-        String resStr =  "'"+ this.getName() +"' должен выдать '" + mTarget.getName()
-                +"' "+ delta + ".";
-
-        log.info("resStr = " + resStr);
-        return resStr;
+        return delta;
     }
 
     public void addMoney(MyBigDecimal v) {
