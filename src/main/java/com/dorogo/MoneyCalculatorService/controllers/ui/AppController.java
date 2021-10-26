@@ -76,7 +76,7 @@ public class AppController {
 
         model = new ModelAndView("result");
         Map<Member, Map<Member, BigDecimal>> resultMap = calculateService.process(list);
-        String resultStr = calculateService.parseResultHuman(resultMap);
+        String resultStr = calculateService.parseResultHuman(resultMap, true);
         model.addObject("listForm", listForm);
         model.addObject("resultMessage", resultStr);
         return model;

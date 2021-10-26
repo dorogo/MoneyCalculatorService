@@ -11,4 +11,6 @@ public interface CalculateService {
     Map<Member, Map<Member, BigDecimal>> process(List<Member> list);
 
     String parseResultHuman(Map<Member, Map<Member, BigDecimal>> resultMap);
+
+    String parseResultHuman(Map<Member, Map<Member, BigDecimal>> resultMap, boolean isHtml);
 }

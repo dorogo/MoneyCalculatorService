@@ -20,6 +20,10 @@ public class CalculateServiceImpl implements CalculateService{
     }
 
     public String parseResultHuman(Map<Member, Map<Member, BigDecimal>> resultMap) {
+        return parseResultHuman(resultMap, false);
+    }
+
+    public String parseResultHuman(Map<Member, Map<Member, BigDecimal>> resultMap, boolean isHtml) {
         if (resultMap == null || resultMap.isEmpty())
             return "Все и так ок %)";
         StringBuilder sb = new StringBuilder();
@@ -31,7 +35,7 @@ public class CalculateServiceImpl implements CalculateService{
                             member.getName(),
                             entry.getKey().getName(),
                             entry.getValue());
-                    sb.append(s).append('\n');
+                    sb.append(s).append(isHtml ? "<br/>" : '\n');
                 }
             }
         );
