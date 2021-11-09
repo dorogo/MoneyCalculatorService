@@ -19,6 +19,8 @@ public class Member {
     private MyBigDecimal change;
 
     public Member(String name, MyBigDecimal spent) {
+        if (spent.compareTo(BigDecimal.ZERO) < 0)
+            throw new IllegalArgumentException("spent cant be negative");
         this.name = name;
         this.spent = spent;
     }
