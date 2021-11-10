@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Map;
 
-//https://medium.com/the-resonant-web/spring-boot-2-0-project-structure-and-best-practices-part-2-7137bdcba7d3
+
 @Controller
 @Slf4j
 public class AppController {
@@ -35,11 +35,11 @@ public class AppController {
 
     @GetMapping("/calculator")
     public String showCalculator(Model model) {
-        ArrayList<MemberForm> validList = new ArrayList<>();
-        validList.add(new MemberForm());
-        validList.add(new MemberForm());
+        ArrayList<MemberForm> list = new ArrayList<>();
+        list.add(new MemberForm());
+        list.add(new MemberForm());
         ListForm listForm = new ListForm();
-        listForm.setList(validList);
+        listForm.setList(list);
         model.addAttribute("listForm", listForm);
         return "calculator";
     }
