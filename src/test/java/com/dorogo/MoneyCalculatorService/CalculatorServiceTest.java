@@ -27,7 +27,7 @@ public class CalculatorServiceTest {
     @Autowired
     CalculateService calculateService;
 
-    private MathContext mathContext = new MathContext(2, RoundingMode.HALF_DOWN);
+    private MathContext mathContext = MyBigDecimal.context;
 
     @Test
     public void testCalculate() {
@@ -66,6 +66,21 @@ public class CalculatorServiceTest {
         sampleResult.put(c, map);
         assertThat(result, equalTo(sampleResult));
         /*--------------------------------------------------------------------------*/
+        a = new Member("a", new MyBigDecimal(5000));
+        b = new Member("b", new MyBigDecimal(7789));
+        c = new Member("c", new MyBigDecimal(0));
+        memberList = Stream.of(a, b, c).collect(Collectors.toList());
+        result = calculateService.process(memberList);
+        //res
+        sampleResult = new HashMap<>();
+        //c
+        map = new HashMap<>();
+        map.put(b, new BigDecimal(3526, mathContext));
+        //a
+        map.put(a, new BigDecimal(737, mathContext));
+        sampleResult.put(c, map);
+        assertThat(result, equalTo(sampleResult));
+        /*--------------------------------------------------------------------------*/
         a = new Member("a", new MyBigDecimal(1));
         b = new Member("b", new MyBigDecimal(0));
         c = new Member("c", new MyBigDecimal(0));
@@ -75,11 +90,11 @@ public class CalculatorServiceTest {
         sampleResult = new HashMap<>();
         //b
         map = new HashMap<>();
-        map.put(a, new BigDecimal(0.33, mathContext));
+        map.put(a, new BigDecimal(1.0/3, mathContext));
         sampleResult.put(b, map);
         //c
         map = new HashMap<>();
-        map.put(a, new BigDecimal(0.33, mathContext));
+        map.put(a, new BigDecimal(1.0/3, mathContext));
         sampleResult.put(c, map);
         assertThat(result, equalTo(sampleResult));
         /*--------------------------------------------------------------------------*/

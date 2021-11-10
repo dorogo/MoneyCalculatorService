@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 
 public class MyBigDecimal extends BigDecimal {
 
-    private static MathContext context = new MathContext(2, RoundingMode.HALF_DOWN);
+    public static MathContext context = new MathContext(10, RoundingMode.HALF_DOWN);
 
     public MyBigDecimal(String s) {
         super(s, context);

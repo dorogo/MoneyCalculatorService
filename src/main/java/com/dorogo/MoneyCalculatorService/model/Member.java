@@ -1,14 +1,15 @@
 package com.dorogo.MoneyCalculatorService.model;
 
 import com.dorogo.MoneyCalculatorService.util.MyBigDecimal;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @Accessors(chain = true)
 @Slf4j

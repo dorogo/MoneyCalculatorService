@@ -99,15 +99,16 @@ class AppControllerTest {
         listForm = new ListForm();
         listForm.setList(list);
 
-        resultMsg = "'m1' должен 'm0' 2<br/>'m2' должен 'm0' 4<br/>";
-
+        String resultMsg1 = "'m1' должен 'm0' 2.00<br/>";
+        String resultMsg2 = "'m2' должен 'm0' 4.00<br/>";
         this.mockMvc.perform(MockMvcRequestBuilderUtils.postForm("/calculator", listForm))
                 .andExpect(status().isOk())
                 .andExpect(view().name("result"))
                 .andExpect(model().attributeExists("listForm"))
                 .andExpect(model().attribute("listForm", hasProperty("list", hasSize(3))))
                 .andExpect(model().attributeExists("resultMessage"))
-                .andExpect(model().attribute("resultMessage", equalTo(resultMsg)));
+                .andExpect(model().attribute("resultMessage", containsString(resultMsg1)))
+                .andExpect(model().attribute("resultMessage", containsString(resultMsg2)));
 
     }
 
