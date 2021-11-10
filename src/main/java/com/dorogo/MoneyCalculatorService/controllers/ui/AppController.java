@@ -20,12 +20,18 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Map;
 
+//https://medium.com/the-resonant-web/spring-boot-2-0-project-structure-and-best-practices-part-2-7137bdcba7d3
 @Controller
 @Slf4j
 public class AppController {
 
     @Autowired
     CalculateService calculateService;
+
+    @GetMapping("/")
+    public ModelAndView redirectMain() {
+        return new ModelAndView("redirect:/calculator");
+    }
 
     @GetMapping("/calculator")
     public String showCalculator(Model model) {
