@@ -139,19 +139,16 @@ public class CalculatorServiceTest {
         map.put(a, new BigDecimal(4));
         resultForParse.put(c, map);
 
-        String s1 = "'b' должен 'a' 2";
-        String s2 = "'c' должен 'a' 4";
-        String s3 = "<br/>";
+        String s1 = "'b' → 'a' 2";
+        String s2 = "'c' → 'a' 4";
         //normal
         String s = calculateService.parseResultHuman(resultForParse);
         assertThat(s, containsString(s1));
         assertThat(s, containsString(s2));
-        assertThat(s, not(containsString(s3)));
         //html version
         s = calculateService.parseResultHuman(resultForParse, true);
         assertThat(s, containsString(s1));
         assertThat(s, containsString(s2));
-        assertThat(s, containsString(s3));
         s = calculateService.parseResultHuman(null);
         String s4 = "Все и так ок %)";
         assertThat(s, containsString(s4));

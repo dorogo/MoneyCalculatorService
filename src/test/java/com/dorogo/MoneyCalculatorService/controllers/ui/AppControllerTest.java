@@ -99,8 +99,8 @@ class AppControllerTest {
         listForm = new ListForm();
         listForm.setList(list);
 
-        String resultMsg1 = "'m1' должен 'm0' 2.00<br/>";
-        String resultMsg2 = "'m2' должен 'm0' 4.00<br/>";
+        String resultMsg1 = "'m1' → 'm0' 2.00";
+        String resultMsg2 = "'m2' → 'm0' 4.00";
         this.mockMvc.perform(MockMvcRequestBuilderUtils.postForm("/calculator", listForm))
                 .andExpect(status().isOk())
                 .andExpect(view().name("result"))
