@@ -2,28 +2,33 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>result</title>
+    <title>Result</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-    <label>Ку!</label>
+<div class="container">
+    <h2>Result</h2>
 
-    <table border="1">
+    <table>
         <thead>
         <tr>
-            <th> Name </th>
-            <th> Spent </th>
+            <th>Name</th>
+            <th>Spent</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="m : ${listForm.list}">
-            <td><span th:text="${m.name}"> Title </span></td>
-            <td><span th:text="${m.spent}"> Author </span></td>
+            <td th:text="${m.name}"></td>
+            <td th:text="${m.spent}"></td>
         </tr>
         </tbody>
     </table>
 
-    <label th:utext="${resultMessage}"></label>
-
+    <div class="debts">
+        <h3>Кто кому должен:</h3>
+        <div th:utext="${resultMessage}"></div>
+    </div>
+</div>
 </body>
 </html>

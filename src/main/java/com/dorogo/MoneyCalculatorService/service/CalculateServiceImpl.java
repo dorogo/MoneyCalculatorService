@@ -28,18 +28,25 @@ public class CalculateServiceImpl implements CalculateService{
         if (resultMap == null || resultMap.isEmpty())
             return "Все и так ок %)";
         StringBuilder sb = new StringBuilder();
+        if(isHtml)sb.append("<ul>");
         resultMap.forEach(
             (member, mMap) ->
             {
                 for (Map.Entry<Member, BigDecimal> entry : mMap.entrySet()) {
-                    String s = String.format("'%s' должен '%s' %s",
+                    String s = "";
+                    if (isHtml)
+                        s+="<li>";
+                    s += String.format("'%s' → '%s' %s",
                             member.getName(),
                             entry.getKey().getName(),
                             entry.getValue().setScale(2, RoundingMode.HALF_UP));
-                    sb.append(s).append(isHtml ? "<br/>" : '\n');
+                    sb.append(s).append(isHtml ? "</li>" : '\n');
+
                 }
             }
         );
+        if (isHtml)
+            sb.append("</ul>");
         return sb.toString();
     }
 
